@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Report Include="BarChartReport.rdl" />
+    <Report Include="GaugeReport.rdl" />
     <Report Include="PieChartReport.rdl" />
     <Report Include="SubReports.rdl" />
   </ItemGroup>
