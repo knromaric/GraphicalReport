@@ -1,38 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily">
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily" MustUnderstand="df">
   <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="ProductDataSource">
       <DataSourceReference>ProductDataSource</DataSourceReference>
-      <rd:SecurityType>Integrated</rd:SecurityType>
-      <rd:DataSourceID>8d68b76f-5530-4eaf-ae3f-aaa6690db1b2</rd:DataSourceID>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>7f14e70d-a4ed-41b9-8461-f38cdfa212de</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="DataSet1">
       <Query>
         <DataSourceName>ProductDataSource</DataSourceName>
-        <CommandText>select t2.ProductCategory, 
-sum(t1.amountSpent) as AmountSpentPerProduct, 
-round(sum(t1.AmountSpent)/sum(sum(amountSpent)) over(), 2) as PercentagePerProduct
-from dbo.tblFactCustomerPurchases t1
-inner join dbo.tblDimProduct t2 on t1.ProductKey=t2.ProductKey
-where year(t1.PurchaseDate)=2016
-group by t2.ProductCategory</CommandText>
+        <CommandText>select year(PurchaseDate) as PurchaseYear, 
+sum(amountSpent) as amountSpent
+from dbo.tblFactCustomerPurchases
+group by year(PurchaseDate)
+order by year(PurchaseDate)</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
-        <Field Name="ProductCategory">
-          <DataField>ProductCategory</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+        <Field Name="PurchaseYear">
+          <DataField>PurchaseYear</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="AmountSpentPerProduct">
-          <DataField>AmountSpentPerProduct</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
-        <Field Name="PercentagePerProduct">
-          <DataField>PercentagePerProduct</DataField>
+        <Field Name="amountSpent">
+          <DataField>amountSpent</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
       </Fields>
@@ -49,7 +43,7 @@ group by t2.ProductCategory</CommandText>
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>PieChartReport</Value>
+                    <Value>BarChartReport</Value>
                     <Style>
                       <FontFamily>Segoe UI Light</FontFamily>
                       <FontSize>24pt</FontSize>
@@ -62,7 +56,6 @@ group by t2.ProductCategory</CommandText>
             </Paragraphs>
             <rd:DefaultName>textbox1</rd:DefaultName>
             <Height>0.43in</Height>
-            <Width>5in</Width>
             <Style>
               <PaddingLeft>2pt</PaddingLeft>
               <PaddingRight>2pt</PaddingRight>
@@ -73,9 +66,6 @@ group by t2.ProductCategory</CommandText>
           <Tablix Name="table1">
             <TablixBody>
               <TablixColumns>
-                <TablixColumn>
-                  <Width>1in</Width>
-                </TablixColumn>
                 <TablixColumn>
                   <Width>1in</Width>
                 </TablixColumn>
@@ -96,7 +86,7 @@ group by t2.ProductCategory</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Product Category</Value>
+                                  <Value>Purchase Year</Value>
                                   <Style>
                                     <FontFamily />
                                     <FontSize>11pt</FontSize>
@@ -105,10 +95,15 @@ group by t2.ProductCategory</CommandText>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <FontFamily />
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>textbox2</rd:DefaultName>
+                          <Height>0.22in</Height>
+                          <Width>1in</Width>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -134,7 +129,7 @@ group by t2.ProductCategory</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Amount Spent Per Product</Value>
+                                  <Value>amount Spent</Value>
                                   <Style>
                                     <FontFamily />
                                     <FontSize>11pt</FontSize>
@@ -150,47 +145,8 @@ group by t2.ProductCategory</CommandText>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>textbox3</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                            </Border>
-                            <BottomBorder>
-                              <Style>Solid</Style>
-                            </BottomBorder>
-                            <FontFamily />
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="textbox4">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Percentage Per Product</Value>
-                                  <Style>
-                                    <FontFamily />
-                                    <FontSize>11pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                    <Color>#666666</Color>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <FontFamily />
-                                <TextAlign>Right</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>textbox4</rd:DefaultName>
+                          <Height>0.22in</Height>
+                          <Width>1in</Width>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -214,14 +170,14 @@ group by t2.ProductCategory</CommandText>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="ProductCategory">
+                        <Textbox Name="PurchaseYear">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!ProductCategory.Value</Value>
+                                  <Value>=Fields!PurchaseYear.Value</Value>
                                   <Style>
                                     <FontFamily />
                                     <Color>#333333</Color>
@@ -231,7 +187,9 @@ group by t2.ProductCategory</CommandText>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>ProductCategory</rd:DefaultName>
+                          <rd:DefaultName>PurchaseYear</rd:DefaultName>
+                          <Height>0.21in</Height>
+                          <Width>1in</Width>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -250,14 +208,14 @@ group by t2.ProductCategory</CommandText>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="AmountSpentPerProduct">
+                        <Textbox Name="amountSpent">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!AmountSpentPerProduct.Value</Value>
+                                  <Value>=Fields!amountSpent.Value</Value>
                                   <Style>
                                     <FontFamily />
                                     <Color>#333333</Color>
@@ -267,43 +225,9 @@ group by t2.ProductCategory</CommandText>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>AmountSpentPerProduct</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                            </Border>
-                            <BottomBorder>
-                              <Style>Solid</Style>
-                            </BottomBorder>
-                            <FontFamily />
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="PercentagePerProduct">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!PercentagePerProduct.Value</Value>
-                                  <Style>
-                                    <FontFamily />
-                                    <Color>#333333</Color>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>PercentagePerProduct</rd:DefaultName>
+                          <rd:DefaultName>amountSpent</rd:DefaultName>
+                          <Height>0.21in</Height>
+                          <Width>1in</Width>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -326,7 +250,6 @@ group by t2.ProductCategory</CommandText>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
-                <TablixMember />
                 <TablixMember />
                 <TablixMember />
               </TablixMembers>
@@ -353,9 +276,6 @@ group by t2.ProductCategory</CommandText>
             </TablixRowHierarchy>
             <DataSetName>DataSet1</DataSetName>
             <Top>0.43in</Top>
-            <Height>0.43in</Height>
-            <Width>3in</Width>
-            <ZIndex>1</ZIndex>
             <Style />
           </Tablix>
         </ReportItems>
@@ -380,6 +300,6 @@ group by t2.ProductCategory</CommandText>
   </ReportParametersLayout>
   <Language>en-US</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
-  <rd:ReportUnitType>Inch</rd:ReportUnitType>
-  <rd:ReportID>c986d319-96c0-45c5-90b0-ded08d302659</rd:ReportID>
+  <rd:ReportUnitType>Invalid</rd:ReportUnitType>
+  <rd:ReportID>45f4ac0f-9ef9-473b-82e5-ddc67e9ba890</rd:ReportID>
 </Report>

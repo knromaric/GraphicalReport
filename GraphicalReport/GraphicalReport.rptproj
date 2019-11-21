@@ -50,6 +50,10 @@
     <Reports>@(Report)</Reports>
   </PropertyGroup>
   <ItemGroup>
+    <DataSource Include="ProductDataSource.rds" />
+  </ItemGroup>
+  <ItemGroup>
+    <Report Include="BarChartReport.rdl" />
     <Report Include="PieChartReport.rdl" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Reporting Services\Microsoft.ReportingServices.MSBuilder.targets" />
