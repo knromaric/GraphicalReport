@@ -55,6 +55,7 @@
   <ItemGroup>
     <Report Include="BarChartReport.rdl" />
     <Report Include="PieChartReport.rdl" />
+    <Report Include="SubReports.rdl" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Reporting Services\Microsoft.ReportingServices.MSBuilder.targets" />
 </Project>
