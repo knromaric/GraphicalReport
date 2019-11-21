@@ -213,6 +213,7 @@ order by year(PurchaseDate)</CommandText>
                                   <Value>=Fields!amountSpent.Value</Value>
                                   <Style>
                                     <FontFamily />
+                                    <Format>'$'#,0.00;('$'#,0.00)</Format>
                                     <Color>#333333</Color>
                                   </Style>
                                 </TextRun>
@@ -233,6 +234,7 @@ order by year(PurchaseDate)</CommandText>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
+                            <rd:FormatSymbolCulture>en-US</rd:FormatSymbolCulture>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -350,10 +352,9 @@ order by year(PurchaseDate)</CommandText>
                       <Color>#5c5c5c</Color>
                     </Style>
                     <ChartAxisTitle>
-                      <Caption />
+                      <Caption>Calendar Year</Caption>
                       <Style>
                         <FontSize>9pt</FontSize>
-                        <Color>#5c5c5c</Color>
                       </Style>
                     </ChartAxisTitle>
                     <ChartMajorGridLines>
@@ -460,13 +461,13 @@ order by year(PurchaseDate)</CommandText>
                         <Style>None</Style>
                       </Border>
                       <FontSize>8pt</FontSize>
+                      <Format>0,;(0,)</Format>
                       <Color>#5c5c5c</Color>
                     </Style>
                     <ChartAxisTitle>
-                      <Caption />
+                      <Caption>Amount Spent in Thousands Of US Dollars</Caption>
                       <Style>
                         <FontSize>9pt</FontSize>
-                        <Color>#5c5c5c</Color>
                       </Style>
                     </ChartAxisTitle>
                     <ChartMajorGridLines>
@@ -590,16 +591,14 @@ order by year(PurchaseDate)</CommandText>
             </ChartLegends>
             <ChartTitles>
               <ChartTitle Name="Default">
-                <Caption>Chart Title</Caption>
+                <Caption>Amount Spent Per Calendar Year</Caption>
                 <Style>
                   <BackgroundGradientType>None</BackgroundGradientType>
-                  <FontSize>9pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
                   <TextAlign>Left</TextAlign>
                   <VerticalAlign>Top</VerticalAlign>
-                  <Color>#a6a6a6</Color>
                 </Style>
-                <Position>TopLeft</Position>
               </ChartTitle>
             </ChartTitles>
             <Palette>Pacific</Palette>

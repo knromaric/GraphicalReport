@@ -260,6 +260,7 @@ group by t2.ProductCategory</CommandText>
                                   <Value>=Fields!AmountSpentPerProduct.Value</Value>
                                   <Style>
                                     <FontFamily />
+                                    <Format>'$'#,0.00;('$'#,0.00)</Format>
                                     <Color>#333333</Color>
                                   </Style>
                                 </TextRun>
@@ -280,6 +281,7 @@ group by t2.ProductCategory</CommandText>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
                             <PaddingBottom>2pt</PaddingBottom>
+                            <rd:FormatSymbolCulture>en-US</rd:FormatSymbolCulture>
                           </Style>
                         </Textbox>
                       </CellContents>
@@ -296,6 +298,7 @@ group by t2.ProductCategory</CommandText>
                                   <Value>=Fields!PercentagePerProduct.Value</Value>
                                   <Style>
                                     <FontFamily />
+                                    <Format>0%</Format>
                                     <Color>#333333</Color>
                                   </Style>
                                 </TextRun>
@@ -392,7 +395,12 @@ group by t2.ProductCategory</CommandText>
                         <Y>=Sum(Fields!PercentagePerProduct.Value)</Y>
                       </ChartDataPointValues>
                       <ChartDataLabel>
-                        <Style />
+                        <Style>
+                          <Format>0%</Format>
+                        </Style>
+                        <UseValueAsLabel>true</UseValueAsLabel>
+                        <Visible>true</Visible>
+                        <Position>Outside</Position>
                       </ChartDataLabel>
                       <Style />
                       <ChartMarker>
@@ -412,6 +420,16 @@ group by t2.ProductCategory</CommandText>
                       <Style />
                     </ChartDataLabel>
                   </ChartEmptyPoints>
+                  <CustomProperties>
+                    <CustomProperty>
+                      <Name>PieLabelStyle</Name>
+                      <Value>Outside</Value>
+                    </CustomProperty>
+                    <CustomProperty>
+                      <Name>PieLineColor</Name>
+                      <Value>Black</Value>
+                    </CustomProperty>
+                  </CustomProperties>
                   <ValueAxisName>Primary</ValueAxisName>
                   <CategoryAxisName>Primary</CategoryAxisName>
                   <ChartSmartLabel>
@@ -659,6 +677,7 @@ group by t2.ProductCategory</CommandText>
                   <BackgroundGradientType>None</BackgroundGradientType>
                   <FontSize>8pt</FontSize>
                 </Style>
+                <Position>BottomCenter</Position>
                 <ChartLegendTitle>
                   <Caption />
                   <Style>
@@ -673,16 +692,14 @@ group by t2.ProductCategory</CommandText>
             </ChartLegends>
             <ChartTitles>
               <ChartTitle Name="Default">
-                <Caption>Chart Title</Caption>
+                <Caption>Percentage of purchases by product category in 2016</Caption>
                 <Style>
                   <BackgroundGradientType>None</BackgroundGradientType>
-                  <FontSize>9pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
                   <TextAlign>Left</TextAlign>
                   <VerticalAlign>Top</VerticalAlign>
-                  <Color>#a6a6a6</Color>
                 </Style>
-                <Position>TopLeft</Position>
               </ChartTitle>
             </ChartTitles>
             <Palette>Pacific</Palette>
