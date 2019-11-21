@@ -54,7 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Report Include="BarChartReport.rdl" />
+    <Report Include="DashboardReport.rdl" />
     <Report Include="GaugeReport.rdl" />
+    <Report Include="indicatorReport.rdl" />
     <Report Include="PieChartReport.rdl" />
     <Report Include="SparkLineReport.rdl" />
     <Report Include="SubReports.rdl" />

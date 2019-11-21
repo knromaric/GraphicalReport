@@ -6,26 +6,31 @@
     <DataSource Name="ProductDataSource">
       <DataSourceReference>ProductDataSource</DataSourceReference>
       <rd:SecurityType>None</rd:SecurityType>
-      <rd:DataSourceID>cab230a8-46d9-4630-a0de-fcd45c23383e</rd:DataSourceID>
+      <rd:DataSourceID>52f32243-5636-47aa-8ba0-ffee84766cde</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="DataSet1">
       <Query>
         <DataSourceName>ProductDataSource</DataSourceName>
-        <CommandText>select sum(amountSpent) as AmountSpent, 
+        <CommandText>select t2.ProductCategory, 
+sum(amountSpent) as AmountSpent, 
 t3.TargetAmount, 
-round(sum(amountSpent)/t3.TargetAmount,2)*100 as PercentageToTarget
+round(sum(amountSpent)/t3.TargetAmount,2) as PercentageToTarget
 from dbo.tblFactCustomerPurchases t1
 inner join dbo.tblDimProduct t2 
    on t1.ProductKey=t2.ProductKey
 inner join dbo.tblSalesTarget t3 
    on t2.ProductCategoryKey=t3.ProductCategoryKey
-where ProductCategory='fresh fruit'
-group by t3.TargetAmount</CommandText>
+group by t2.ProductCategory, t3.TargetAmount
+order by t2.ProductCategory</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
+        <Field Name="ProductCategory">
+          <DataField>ProductCategory</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="AmountSpent">
           <DataField>AmountSpent</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -52,7 +57,7 @@ group by t3.TargetAmount</CommandText>
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>GaugeReport</Value>
+                    <Value>indicatorReport</Value>
                     <Style>
                       <FontFamily>Segoe UI Light</FontFamily>
                       <FontSize>24pt</FontSize>
@@ -64,8 +69,8 @@ group by t3.TargetAmount</CommandText>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>textbox1</rd:DefaultName>
-            <Height>0.52375in</Height>
-            <Width>4.22792in</Width>
+            <Height>0.43in</Height>
+            <Width>5in</Width>
             <Style>
               <PaddingLeft>2pt</PaddingLeft>
               <PaddingRight>2pt</PaddingRight>
@@ -77,10 +82,16 @@ group by t3.TargetAmount</CommandText>
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1in</Width>
+                  <Width>1.625in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1in</Width>
+                  <Width>1.375in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.3125in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.5625in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1in</Width>
@@ -99,7 +110,7 @@ group by t3.TargetAmount</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Amount Spent</Value>
+                                  <Value>Product Category</Value>
                                   <Style>
                                     <FontFamily />
                                     <FontSize>11pt</FontSize>
@@ -109,8 +120,7 @@ group by t3.TargetAmount</CommandText>
                                 </TextRun>
                               </TextRuns>
                               <Style>
-                                <FontFamily />
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -140,7 +150,7 @@ group by t3.TargetAmount</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Target Amount</Value>
+                                  <Value>Amount Spent</Value>
                                   <Style>
                                     <FontFamily />
                                     <FontSize>11pt</FontSize>
@@ -151,7 +161,7 @@ group by t3.TargetAmount</CommandText>
                               </TextRuns>
                               <Style>
                                 <FontFamily />
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -181,7 +191,7 @@ group by t3.TargetAmount</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Percentage To Target</Value>
+                                  <Value>Target Amount</Value>
                                   <Style>
                                     <FontFamily />
                                     <FontSize>11pt</FontSize>
@@ -192,7 +202,7 @@ group by t3.TargetAmount</CommandText>
                               </TextRuns>
                               <Style>
                                 <FontFamily />
-                                <TextAlign>Right</TextAlign>
+                                <TextAlign>Center</TextAlign>
                               </Style>
                             </Paragraph>
                           </Paragraphs>
@@ -213,11 +223,127 @@ group by t3.TargetAmount</CommandText>
                         </Textbox>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="textbox5">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Percentage To Target</Value>
+                                  <Style>
+                                    <FontFamily />
+                                    <FontSize>11pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>#666666</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <FontFamily />
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>textbox5</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <FontFamily />
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox6">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Status</Value>
+                                  <Style>
+                                    <FontFamily />
+                                    <FontSize>11pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                    <Color>#666666</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox6</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
                   <Height>0.21in</Height>
                   <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="ProductCategory">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!ProductCategory.Value</Value>
+                                  <Style>
+                                    <FontFamily />
+                                    <Color>#333333</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>ProductCategory</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                            </Border>
+                            <BottomBorder>
+                              <Style>Solid</Style>
+                            </BottomBorder>
+                            <FontFamily />
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="AmountSpent">
@@ -230,12 +356,14 @@ group by t3.TargetAmount</CommandText>
                                   <Value>=Fields!AmountSpent.Value</Value>
                                   <Style>
                                     <FontFamily />
-                                    <Format>'$'#,0;('$'#,0)</Format>
+                                    <Format>'$'#,0.00;('$'#,0.00)</Format>
                                     <Color>#333333</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>AmountSpent</rd:DefaultName>
@@ -268,12 +396,14 @@ group by t3.TargetAmount</CommandText>
                                   <Value>=Fields!TargetAmount.Value</Value>
                                   <Style>
                                     <FontFamily />
-                                    <Format>'$'#,0;('$'#,0)</Format>
+                                    <Format>'$'#,0.00;('$'#,0.00)</Format>
                                     <Color>#333333</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>TargetAmount</rd:DefaultName>
@@ -306,12 +436,14 @@ group by t3.TargetAmount</CommandText>
                                   <Value>=Fields!PercentageToTarget.Value</Value>
                                   <Style>
                                     <FontFamily />
-                                    <Format>0;(0)</Format>
+                                    <Format>0%</Format>
                                     <Color>#333333</Color>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
-                              <Style />
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>PercentageToTarget</rd:DefaultName>
@@ -331,12 +463,148 @@ group by t3.TargetAmount</CommandText>
                         </Textbox>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <GaugePanel Name="GaugePanel1">
+                          <StateIndicators>
+                            <StateIndicator Name="Indicator1">
+                              <GaugeInputValue>
+                                <Value>=Sum(Fields!PercentageToTarget.Value)</Value>
+                                <Multiplier>1</Multiplier>
+                                <DataElementOutput>NoOutput</DataElementOutput>
+                              </GaugeInputValue>
+                              <TransformationType>None</TransformationType>
+                              <TransformationScope>table1</TransformationScope>
+                              <MinimumValue>
+                                <Value>NaN</Value>
+                                <Multiplier>1</Multiplier>
+                              </MinimumValue>
+                              <MaximumValue>
+                                <Value>NaN</Value>
+                                <Multiplier>1</Multiplier>
+                              </MaximumValue>
+                              <IndicatorStyle>None</IndicatorStyle>
+                              <IndicatorImage>
+                                <Source>External</Source>
+                                <Value />
+                              </IndicatorImage>
+                              <ScaleFactor>1</ScaleFactor>
+                              <IndicatorStates>
+                                <IndicatorState Name="ThreeSignsDiamond">
+                                  <StartValue>
+                                    <Value>0</Value>
+                                    <Multiplier>1</Multiplier>
+                                  </StartValue>
+                                  <EndValue>
+                                    <Value>0.8</Value>
+                                    <Multiplier>1</Multiplier>
+                                  </EndValue>
+                                  <Color>#c0433a</Color>
+                                  <ScaleFactor>1</ScaleFactor>
+                                  <IndicatorStyle>ThreeSignsDiamond</IndicatorStyle>
+                                  <IndicatorImage>
+                                    <Source>External</Source>
+                                    <Value />
+                                  </IndicatorImage>
+                                </IndicatorState>
+                                <IndicatorState Name="ThreeSignsTriangle">
+                                  <StartValue>
+                                    <Value>0.81</Value>
+                                    <Multiplier>1</Multiplier>
+                                  </StartValue>
+                                  <EndValue>
+                                    <Value>0.94</Value>
+                                    <Multiplier>1</Multiplier>
+                                  </EndValue>
+                                  <Color>#e8d62e</Color>
+                                  <ScaleFactor>1</ScaleFactor>
+                                  <IndicatorStyle>ThreeSignsTriangle</IndicatorStyle>
+                                  <IndicatorImage>
+                                    <Source>External</Source>
+                                    <Value />
+                                  </IndicatorImage>
+                                </IndicatorState>
+                                <IndicatorState Name="ThreeSignsCircle">
+                                  <StartValue>
+                                    <Value>0.95</Value>
+                                    <Multiplier>1</Multiplier>
+                                  </StartValue>
+                                  <EndValue>
+                                    <Value>1</Value>
+                                    <Multiplier>1</Multiplier>
+                                  </EndValue>
+                                  <Color>#79c75b</Color>
+                                  <ScaleFactor>1</ScaleFactor>
+                                  <IndicatorStyle>ThreeSignsCircle</IndicatorStyle>
+                                  <IndicatorImage>
+                                    <Source>External</Source>
+                                    <Value />
+                                  </IndicatorImage>
+                                </IndicatorState>
+                              </IndicatorStates>
+                              <Angle>0</Angle>
+                              <StateDataElementName />
+                              <rd:IconsSet>ThreeSigns</rd:IconsSet>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <ShadowOffset>0pt</ShadowOffset>
+                              </Style>
+                              <Top>4</Top>
+                              <Left>4</Left>
+                              <Height>92</Height>
+                              <Width>92</Width>
+                            </StateIndicator>
+                          </StateIndicators>
+                          <AutoLayout>true</AutoLayout>
+                          <BackFrame>
+                            <Style>
+                              <Border>
+                                <Style>None</Style>
+                              </Border>
+                              <BackgroundColor>Gainsboro</BackgroundColor>
+                              <BackgroundGradientType>None</BackgroundGradientType>
+                              <BackgroundGradientEndColor>Gray</BackgroundGradientEndColor>
+                              <BackgroundHatchType>None</BackgroundHatchType>
+                              <ShadowOffset>0pt</ShadowOffset>
+                            </Style>
+                            <FrameBackground>
+                              <Style>
+                                <BackgroundColor>Silver</BackgroundColor>
+                                <BackgroundGradientType>DiagonalLeft</BackgroundGradientType>
+                                <BackgroundGradientEndColor>Gray</BackgroundGradientEndColor>
+                                <BackgroundHatchType>None</BackgroundHatchType>
+                              </Style>
+                            </FrameBackground>
+                            <FrameImage>
+                              <Source>External</Source>
+                              <Value />
+                            </FrameImage>
+                          </BackFrame>
+                          <TopImage>
+                            <Source>External</Source>
+                            <Value />
+                          </TopImage>
+                          <DataSetName>DataSet1</DataSetName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>None</Style>
+                            </Border>
+                            <BackgroundColor>White</BackgroundColor>
+                          </Style>
+                        </GaugePanel>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
+                <TablixMember />
+                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -363,314 +631,41 @@ group by t3.TargetAmount</CommandText>
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet1</DataSetName>
-            <Top>3.32861in</Top>
+            <Top>0.43in</Top>
             <Height>0.43in</Height>
-            <Width>3in</Width>
+            <Width>6.875in</Width>
             <ZIndex>1</ZIndex>
-            <Style />
-          </Tablix>
-          <GaugePanel Name="GaugePanel1">
-            <RadialGauges>
-              <RadialGauge Name="RadialGauge1">
-                <GaugeScales>
-                  <RadialScale Name="RadialScale1">
-                    <GaugePointers>
-                      <RadialPointer Name="RadialPointer1">
-                        <PointerCap>
-                          <Style>
-                            <BackgroundColor>White</BackgroundColor>
-                            <BackgroundGradientType>DiagonalLeft</BackgroundGradientType>
-                            <BackgroundGradientEndColor>DimGray</BackgroundGradientEndColor>
-                            <FontFamily>Arial</FontFamily>
-                            <BackgroundHatchType>None</BackgroundHatchType>
-                          </Style>
-                          <CapImage>
-                            <OffsetX>0pt</OffsetX>
-                            <OffsetY>0pt</OffsetY>
-                            <Source>External</Source>
-                            <Value />
-                          </CapImage>
-                          <OnTop>true</OnTop>
-                          <CapStyle>RoundedWithWideIndentation</CapStyle>
-                          <Width>33</Width>
-                        </PointerCap>
-                        <Style>
-                          <Border>
-                            <Style>None</Style>
-                          </Border>
-                          <BackgroundColor>Tomato</BackgroundColor>
-                          <BackgroundGradientType>None</BackgroundGradientType>
-                          <BackgroundGradientEndColor>Orange</BackgroundGradientEndColor>
-                          <BackgroundHatchType>None</BackgroundHatchType>
-                          <ShadowOffset>0pt</ShadowOffset>
-                        </Style>
-                        <GaugeInputValue>
-                          <Value>=Sum(Fields!PercentageToTarget.Value)</Value>
-                          <Multiplier>1</Multiplier>
-                        </GaugeInputValue>
-                        <PointerImage>
-                          <OffsetX>0pt</OffsetX>
-                          <OffsetY>0pt</OffsetY>
-                          <Source>External</Source>
-                          <Value />
-                        </PointerImage>
-                        <MarkerLength>25</MarkerLength>
-                        <MarkerStyle>Wedge</MarkerStyle>
-                        <Placement>Cross</Placement>
-                        <Width>30</Width>
-                      </RadialPointer>
-                    </GaugePointers>
-                    <ScaleRanges>
-                      <ScaleRange Name="RadialRange1">
-                        <Style>
-                          <Border>
-                            <Color>Silver</Color>
-                            <Style>Solid</Style>
-                          </Border>
-                          <BackgroundColor>#00ffffff</BackgroundColor>
-                          <BackgroundGradientType>DiagonalLeft</BackgroundGradientType>
-                          <BackgroundGradientEndColor>Green</BackgroundGradientEndColor>
-                          <BackgroundHatchType>None</BackgroundHatchType>
-                          <ShadowOffset>0pt</ShadowOffset>
-                        </Style>
-                        <DistanceFromScale>30</DistanceFromScale>
-                        <StartValue>
-                          <Value>80</Value>
-                          <Multiplier>1</Multiplier>
-                        </StartValue>
-                        <EndValue>
-                          <Value>100</Value>
-                          <Multiplier>1</Multiplier>
-                        </EndValue>
-                        <StartWidth>15</StartWidth>
-                        <EndWidth>30</EndWidth>
-                        <Placement>Cross</Placement>
-                      </ScaleRange>
-                    </ScaleRanges>
-                    <Style>
-                      <Border>
-                        <Style>None</Style>
-                      </Border>
-                      <BackgroundColor>LightGrey</BackgroundColor>
-                      <BackgroundGradientType>None</BackgroundGradientType>
-                      <BackgroundGradientEndColor>White</BackgroundGradientEndColor>
-                      <BackgroundHatchType>None</BackgroundHatchType>
-                      <ShadowOffset>0pt</ShadowOffset>
-                    </Style>
-                    <Interval>10</Interval>
-                    <IntervalOffset>NaN</IntervalOffset>
-                    <MaximumValue>
-                      <Value>100</Value>
-                      <Multiplier>1</Multiplier>
-                    </MaximumValue>
-                    <MinimumValue>
-                      <Value>0</Value>
-                      <Multiplier>1</Multiplier>
-                    </MinimumValue>
-                    <GaugeMajorTickMarks>
-                      <Interval>NaN</Interval>
-                      <IntervalOffset>NaN</IntervalOffset>
-                      <Style>
-                        <Border>
-                          <Color>DimGray</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
-                      </Style>
-                      <Placement>Cross</Placement>
-                      <TickMarkImage>
-                        <Source>External</Source>
-                        <Value />
-                      </TickMarkImage>
-                      <Length>14</Length>
-                      <Width>8</Width>
-                      <Shape>Trapezoid</Shape>
-                    </GaugeMajorTickMarks>
-                    <GaugeMinorTickMarks>
-                      <Interval>NaN</Interval>
-                      <IntervalOffset>NaN</IntervalOffset>
-                      <Style>
-                        <Border>
-                          <Color>DimGray</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
-                      </Style>
-                      <Placement>Cross</Placement>
-                      <TickMarkImage>
-                        <Source>External</Source>
-                        <Value />
-                      </TickMarkImage>
-                      <Length>8</Length>
-                      <Width>3</Width>
-                    </GaugeMinorTickMarks>
-                    <MaximumPin>
-                      <PinLabel>
-                        <Style>
-                          <FontSize>12pt</FontSize>
-                        </Style>
-                        <DistanceFromScale>0</DistanceFromScale>
-                      </PinLabel>
-                      <Style>
-                        <Border>
-                          <Color>DimGray</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
-                      </Style>
-                      <Placement>Cross</Placement>
-                      <TickMarkImage>
-                        <Source>External</Source>
-                        <Value />
-                      </TickMarkImage>
-                      <Length>6</Length>
-                      <Width>6</Width>
-                      <Shape>Circle</Shape>
-                    </MaximumPin>
-                    <MinimumPin>
-                      <PinLabel>
-                        <Style>
-                          <FontSize>12pt</FontSize>
-                        </Style>
-                        <DistanceFromScale>0</DistanceFromScale>
-                      </PinLabel>
-                      <Style>
-                        <Border>
-                          <Color>DimGray</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <BackgroundColor>WhiteSmoke</BackgroundColor>
-                      </Style>
-                      <Placement>Cross</Placement>
-                      <TickMarkImage>
-                        <Source>External</Source>
-                        <Value />
-                      </TickMarkImage>
-                      <Length>6</Length>
-                      <Width>6</Width>
-                      <Shape>Circle</Shape>
-                    </MinimumPin>
-                    <ScaleLabels>
-                      <Style>
-                        <FontSize>14pt</FontSize>
-                      </Style>
-                      <Interval>NaN</Interval>
-                      <IntervalOffset>NaN</IntervalOffset>
-                      <DistanceFromScale>0</DistanceFromScale>
-                      <Placement>Outside</Placement>
-                      <ShowEndLabels>true</ShowEndLabels>
-                      <UseFontPercent>true</UseFontPercent>
-                    </ScaleLabels>
-                    <Width>30</Width>
-                  </RadialScale>
-                </GaugeScales>
-                <BackFrame>
-                  <Style>
-                    <Border>
-                      <Style>None</Style>
-                    </Border>
-                    <BackgroundColor>WhiteSmoke</BackgroundColor>
-                    <BackgroundGradientType>None</BackgroundGradientType>
-                    <BackgroundGradientEndColor>Gainsboro</BackgroundGradientEndColor>
-                    <BackgroundHatchType>None</BackgroundHatchType>
-                    <ShadowOffset>0pt</ShadowOffset>
-                  </Style>
-                  <FrameShape>CustomCircular2</FrameShape>
-                  <FrameBackground>
-                    <Style>
-                      <BackgroundColor>WhiteSmoke</BackgroundColor>
-                      <BackgroundGradientType>DiagonalLeft</BackgroundGradientType>
-                      <BackgroundGradientEndColor>Gray</BackgroundGradientEndColor>
-                      <BackgroundHatchType>None</BackgroundHatchType>
-                    </Style>
-                  </FrameBackground>
-                  <FrameImage>
-                    <Source>External</Source>
-                    <Value />
-                  </FrameImage>
-                </BackFrame>
-                <ClipContent>true</ClipContent>
-                <TopImage>
-                  <Source>External</Source>
-                  <Value />
-                </TopImage>
-                <AspectRatio>1</AspectRatio>
-                <Height>100</Height>
-                <Width>100</Width>
-              </RadialGauge>
-            </RadialGauges>
-            <GaugeLabels>
-              <GaugeLabel Name="GaugeLabel1">
-                <Text>=round(Fields!PercentageToTarget.Value,0)</Text>
-                <TextShadowOffset>0pt</TextShadowOffset>
-                <UseFontPercent>true</UseFontPercent>
-                <Style>
-                  <Border>
-                    <Style>None</Style>
-                  </Border>
-                  <BackgroundColor>#00ffffff</BackgroundColor>
-                  <BackgroundGradientType>None</BackgroundGradientType>
-                  <BackgroundGradientEndColor>#00ffffff</BackgroundGradientEndColor>
-                  <FontFamily>Segoe UI Light</FontFamily>
-                  <FontSize>14pt</FontSize>
-                  <TextAlign>Center</TextAlign>
-                  <VerticalAlign>Middle</VerticalAlign>
-                  <Color>#333333</Color>
-                  <ShadowOffset>0pt</ShadowOffset>
-                </Style>
-                <Top>75</Top>
-                <Left>40</Left>
-                <Height>20</Height>
-                <Width>20</Width>
-                <ParentItem>RadialGauges.RadialGauge1</ParentItem>
-              </GaugeLabel>
-            </GaugeLabels>
-            <AutoLayout>true</AutoLayout>
-            <BackFrame>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <BackgroundColor>Gainsboro</BackgroundColor>
-                <BackgroundGradientType>None</BackgroundGradientType>
-                <BackgroundGradientEndColor>Gray</BackgroundGradientEndColor>
-                <BackgroundHatchType>None</BackgroundHatchType>
-                <ShadowOffset>0pt</ShadowOffset>
-              </Style>
-              <FrameBackground>
-                <Style>
-                  <BackgroundColor>Silver</BackgroundColor>
-                  <BackgroundGradientType>DiagonalLeft</BackgroundGradientType>
-                  <BackgroundGradientEndColor>Gray</BackgroundGradientEndColor>
-                  <BackgroundHatchType>None</BackgroundHatchType>
-                </Style>
-              </FrameBackground>
-              <FrameImage>
-                <Source>External</Source>
-                <Value />
-              </FrameImage>
-            </BackFrame>
-            <TopImage>
-              <Source>External</Source>
-              <Value />
-            </TopImage>
-            <DataSetName>DataSet1</DataSetName>
-            <Top>0.57931in</Top>
-            <Height>2.67986in</Height>
-            <Width>4.22792in</Width>
-            <ZIndex>2</ZIndex>
             <Style>
               <Border>
-                <Style>None</Style>
+                <Style>Solid</Style>
               </Border>
-              <BackgroundColor>White</BackgroundColor>
+              <TopBorder>
+                <Color>Black</Color>
+                <Style>Solid</Style>
+                <Width>1pt</Width>
+              </TopBorder>
+              <BottomBorder>
+                <Color>Black</Color>
+                <Style>Solid</Style>
+                <Width>1pt</Width>
+              </BottomBorder>
+              <LeftBorder>
+                <Color>Black</Color>
+                <Style>Solid</Style>
+                <Width>1pt</Width>
+              </LeftBorder>
+              <RightBorder>
+                <Color>Black</Color>
+                <Style>Solid</Style>
+                <Width>1pt</Width>
+              </RightBorder>
             </Style>
-          </GaugePanel>
+          </Tablix>
         </ReportItems>
-        <Height>3.82875in</Height>
+        <Height>0.89125in</Height>
         <Style />
       </Body>
-      <Width>4.28125in</Width>
+      <Width>6.88542in</Width>
       <Page>
         <LeftMargin>1in</LeftMargin>
         <RightMargin>1in</RightMargin>
@@ -689,5 +684,5 @@ group by t3.TargetAmount</CommandText>
   <Language>en-US</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Inch</rd:ReportUnitType>
-  <rd:ReportID>95e47806-7dce-4ccd-8f95-464ca5217e56</rd:ReportID>
+  <rd:ReportID>a15c549a-a8d3-4868-9632-e1076784fe1a</rd:ReportID>
 </Report>
