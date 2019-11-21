@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.106
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "GraphicalReport", "GraphicalReport\GraphicalReport.rptproj", "{88C75312-D2E5-47D0-AE68-59FCB498DE18}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88C75312-D2E5-47D0-AE68-59FCB498DE18}.Debug|Default.ActiveCfg = Debug
+		{88C75312-D2E5-47D0-AE68-59FCB498DE18}.Debug|Default.Build.0 = Debug
+		{88C75312-D2E5-47D0-AE68-59FCB498DE18}.Debug|Default.Deploy.0 = Debug
+		{88C75312-D2E5-47D0-AE68-59FCB498DE18}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{88C75312-D2E5-47D0-AE68-59FCB498DE18}.DebugLocal|Default.Build.0 = DebugLocal
+		{88C75312-D2E5-47D0-AE68-59FCB498DE18}.Release|Default.ActiveCfg = Release
+		{88C75312-D2E5-47D0-AE68-59FCB498DE18}.Release|Default.Build.0 = Release
+		{88C75312-D2E5-47D0-AE68-59FCB498DE18}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6BED3A97-A73B-482C-B280-E1CBD37DBA85}
+	EndGlobalSection
+EndGlobal
