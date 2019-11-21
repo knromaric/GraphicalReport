@@ -57,6 +57,7 @@
     <Report Include="DashboardReport.rdl" />
     <Report Include="GaugeReport.rdl" />
     <Report Include="indicatorReport.rdl" />
+    <Report Include="LineMapReport.rdl" />
     <Report Include="PieChartReport.rdl" />
     <Report Include="PointMapReport.rdl" />
     <Report Include="SparkLineReport.rdl" />
